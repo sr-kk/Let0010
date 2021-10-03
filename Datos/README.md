@@ -6,6 +6,6 @@ Datos obtenidos de **[_kaggle_](https://www.kaggle.com/secareanualin/football-ev
 
 ## Indice
 
-    * events.csv: contiene los datos de cada partido. Los comentarios de texto fueron extraídos de: _bbc.com_, _espn.com_ y _onefootball.com_
-    * ginf.csv: contiene metadatos y probabildades de mercado de cada partido. Estos ultimos obtenidos de _oddsportal.com_
-    * dictionary.txt: diccionario con la descripcion de cada variable asignada en cada categoria en el archivo _events.csv_
+* events.csv: contiene los datos de cada partido. Los comentarios de texto fueron extraídos de: _bbc.com_, _espn.com_ y _onefootball.com_
+* ginf.csv: contiene metadatos y probabildades de mercado de cada partido. Estos ultimos obtenidos de _oddsportal.com_
+* dictionary.txt: diccionario con la descripcion de cada variable asignada en cada categoria en el archivo _events.csv_
