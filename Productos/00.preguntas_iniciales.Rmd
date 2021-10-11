@@ -19,12 +19,15 @@ Estas son:
 
 4. Quienes son los jugadores que mas probabilidad tienen de marcar un gol desde fuera del área
 
-4. Cuál es la probabilidad de que un equipo que no sea del Big six (Liverpool, Man. city, Man. united, Chelsea, Tottenham, Arsenal) gane la premier league en la temporada 2015-16.
+5. Cuál es la probabilidad de que un equipo que no sea del Big six (Liverpool, Man. city, Man. united, Chelsea, Tottenham, Arsenal) gane la premier league en la temporada 2015-16.
 
-5. Cuáles fueron las estadísticas del equipo Leicester City al ganar su primera premier league.
+6. Cuáles fueron las estadísticas del equipo Leicester City al ganar su primera premier league.
 
-6. Cuál es la probabildiad de que Juventus y F.C Bayern ganen las ligas de cada pais durante todas las temporadas de la cual se tienen datos. Y mostar sus estadísticas por temporada.
+7. Cuál es la probabildiad de que Juventus y F.C Bayern ganen las ligas de cada pais durante todas las temporadas de la cual se tienen datos. Y mostar sus estadísticas por temporada.
 
-7. Qué equipos tienen una mayor tendencia a ganar un partido sabiendo que marcaron el primer gol, y cuáles son los que mayor tendencia tienen a perderlo.
+8. Qué equipos tienen una mayor tendencia a ganar un partido sabiendo que marcaron el primer gol, y cuáles son los que mayor tendencia tienen a perderlo.
 
-8. De cada equipo que ganó la liga de su país en cada temporada, comparar a los goleadores de cada uno y analizar sus estadísticas. Quién tuvo un mejor rendimiento? Obtuvo ese jugador trofeos personales ese año?
+9. De cada equipo que ganó la liga de su país en cada temporada, comparar a los goleadores de cada uno y analizar sus estadísticas. Quién tuvo un mejor rendimiento? Obtuvo ese jugador trofeos personales ese año?
+
+10. Hacer una comparativa entre Messi y Cristiano Ronaldo por cada temporada y una final a modo de conclusión.
+
