@@ -1,0 +1,30 @@
+---
+title: 'Preguntas iniciales'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+A continuación mencionaré algunas preguntas interesantes que me gustaría responder analizando los datos de la sección [Datos](https://github.com/sr-kk/Let0010/tree/main/Datos) 
+
+Estas son:
+
+1. Qué equipos tienen una mayor tendencia a ganar un partido dado que marcaron el primer gol, y cuáles son los que tienen mayor tendencia a perderlo.
+
+2. Qué porteros tienen más probabilidad de no atajar un penal y los que si. Top 5 de cada uno y mencionar las ligas a las que corresponden.
+
+3. Top 10 jugadores que tienen más probabilidades de ser expulsados.
+
+4. Quienes son los jugadores que mas probabilidad tienen de marcar un gol desde fuera del área
+
+4. Cuál es la probabilidad de que un equipo que no sea del Big six (Liverpool, Man. city, Man. united, Chelsea, Tottenham, Arsenal) gane la premier league en la temporada 2015-16.
+
+5. Cuáles fueron las estadísticas del equipo Leicester City al ganar su primera premier league.
+
+6. Cuál es la probabildiad de que Juventus y F.C Bayern ganen las ligas de cada pais durante todas las temporadas de la cual se tienen datos. Y mostar sus estadísticas por temporada.
+
+7. Qué equipos tienen una mayor tendencia a ganar un partido sabiendo que marcaron el primer gol, y cuáles son los que mayor tendencia tienen a perderlo.
+
+8. De cada equipo que ganó la liga de su país en cada temporada, comparar a los goleadores de cada uno y analizar sus estadísticas. Quién tuvo un mejor rendimiento? Obtuvo ese jugador trofeos personales ese año?
