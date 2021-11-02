@@ -13,6 +13,7 @@ eventos = events
 
 eventos <- left_join(eventos, matches[,c('id_odsp','league','season')], by = "id_odsp")
 
+# A continuacion reescribiremos las variables con el fin de que sean mas explicitas 
 
 eventos$event_type = case_when(
   eventos$event_type == 0 ~ 'Announcement',
@@ -64,7 +65,6 @@ eventos$shot_outcome = case_when(
   eventos$shot_outcome == 4 ~ 'Hit the bar',
   TRUE ~ as.character(eventos$shot_outcome)
 )
-
 
 eventos$location = case_when(
   eventos$location == 1 ~ 'Attacking half',
@@ -135,7 +135,7 @@ eventos$time = as.factor(eventos$time)
 eventos$is_goal = as.factor(eventos$is_goal)
 
 
-# Haremos uso de sql para obtener separar la informacion por ligas
+# Haremos uso de sql para obtener separar la informacion por ligas 
 
 Bundesliga = sqldf("select * from eventos 
                    where league = 'Bundesliga'")
@@ -179,6 +179,7 @@ subset(eventos,!is.na(event_type2)) %>%
        y = "Frecuency") +
   theme(axis.text.x = element_text(angle=45, vjust = 0.8)) 
 
+# Aqui no es necesario filtrar por la temporada, puesto que la informacion faltante no es de gran importancia para hacer esta comparativa
 
 subset(eventos,!is.na(shot_place)) %>% 
   ggplot(aes(x = reorder(shot_place, -table(shot_place)[shot_place]), fill = league)) +
@@ -190,3 +191,4 @@ subset(eventos,!is.na(shot_place)) %>%
        y = "Frecuency") +
   theme(axis.text.x = element_text(angle=45, vjust = 0.8)) +
   scale_y_continuous(limits = c(0, 15000), breaks = seq(0,15000, by =5000)) 
+
