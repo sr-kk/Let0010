@@ -2,6 +2,9 @@ require(tidyverse)
 library(dplyr)
 library(ggthemes)
 library(ggplot2)
+library(gghighlight)
+library(patchwork)
+require(vcd)
 
 source(here::here('Codigo/Cargar_datos.R'), encoding = 'UTF-8')
 
@@ -26,15 +29,15 @@ shots = PL_season_2015_2016[PL_season_2015_2016$event_type=='Intento',] %>%
   count(event_team)
 goals = PL_season_2015_2016[PL_season_2015_2016$is_goal==1,] %>% 
   count(event_team)
-goals_table = left_join(shots,goals, by = 'event_team')
-goals_table$goals_per_shot = round(goals_table$n.y / goals_table$n.x,2)
-goals_table = goals_table[order(desc(goals_table$goals_per_shot)),]
-goals_table$event_team = factor(goals_table$event_team, levels = goals_table$event_team[order(desc(goals_table$goals_per_shot))])
+goals_table_2015_2016 = left_join(shots,goals, by = 'event_team')
+goals_table_2015_2016$goals_per_shot = round(goals_table_2015_2016$n.y / goals_table_2015_2016$n.x,2)
+goals_table_2015_2016 = goals_table[order(desc(goals_table_2015_2016$goals_per_shot)),]
+goals_table_2015_2016$event_team = factor(goals_table_2015_2016$event_team, levels = goals_table_2015_2016$event_team[order(desc(goals_table_2015_2016$goals_per_shot))])
 
-ggplot(goals_table, aes(x = event_team, y = goals_per_shot, fill = event_team)) +
+ggplot(goals_table_2015_2016, aes(x = event_team, y = goals_per_shot, fill = event_team)) +
   geom_bar(stat = "identity",   width = 0.5, show.legend = F) + 
   theme_minimal() +
-  scale_color_colorblind() +
+  gghighlight(event_team == "Leicester City" | event_team == 'Chelsea') +
   labs(title = "Ratio de goles por tiro", y='Goles por tiro', x=NULL,
        subtitle = ' Premier League temporada 2015-2016') +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.4),
@@ -47,15 +50,15 @@ shots = PL_season_2014_2015[PL_season_2014_2015$event_type=='Intento',] %>%
   count(event_team)
 goals = PL_season_2014_2015[PL_season_2014_2015$is_goal==1,] %>% 
   count(event_team)
-goals_table = left_join(shots,goals, by = 'event_team')
-goals_table$goals_per_shot = round(goals_table$n.y / goals_table$n.x,2)
-goals_table = goals_table[order(desc(goals_table$goals_per_shot)),]
-goals_table$event_team = factor(goals_table$event_team, levels = goals_table$event_team[order(desc(goals_table$goals_per_shot))])
+goals_table_2014_2015 = left_join(shots,goals, by = 'event_team')
+goals_table_2014_2015$goals_per_shot = round(goals_table_2014_2015$n.y / goals_table_2014_2015$n.x,2)
+goals_table_2014_2015 = goals_table_2014_2015[order(desc(goals_table_2014_2015$goals_per_shot)),]
+goals_table_2014_2015$event_team = factor(goals_table_2014_2015$event_team, levels = goals_table_2014_2015$event_team[order(desc(goals_table_2014_2015$goals_per_shot))])
 
-ggplot(goals_table, aes(x = event_team, y = goals_per_shot, fill = event_team)) +
+ggplot(goals_table_2014_2015, aes(x = event_team, y = goals_per_shot, fill = event_team)) +
   geom_bar(stat = "identity",   width = 0.5, show.legend = F) + 
   theme_minimal() +
-  scale_color_colorblind() +
+  gghighlight(event_team == "Leicester City" | event_team == 'Chelsea') +
   labs(title = "Ratio de goles por tiro", y='Goles por tiro', x=NULL,
        subtitle = ' Premier League temporada 2014-2015') +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.4),
@@ -66,79 +69,184 @@ ggplot(goals_table, aes(x = event_team, y = goals_per_shot, fill = event_team)) 
 
 # Goles por partido -------------------------------------------------------
 
+
+# Goles por partido temporada 2014-2015 -----------------------------------
+
 total_matches = count(PL_season_2014_2015 %>% 
                          filter(event_team=='Leicester City') %>% 
                          distinct(id_odsp)) 
 
-goals_table$matches = rep(as.numeric(total_matches), length(goals_table[,1]))
-goals_table$goals_per_match = round(goals_table$n.y / goals_table$matches, 2)
-goals_table = goals_table[order(desc(goals_table$goals_per_match)),]
-goals_table$event_team = factor(goals_table$event_team, levels = goals_table$event_team[order(desc(goals_table$goals_per_match))])
+goals_table_2014_2015$matches = rep(as.numeric(total_matches), length(goals_table_2014_2015[,1]))
+goals_table_2014_2015$goals_per_match = round(goals_table_2014_2015$n.y / goals_table_2014_2015$matches, 2)
+goals_table_2014_2015 = goals_table_2014_2015[order(desc(goals_table_2014_2015$goals_per_match)),]
+goals_table_2014_2015$event_team = factor(goals_table_2014_2015$event_team, levels = goals_table_2014_2015$event_team[order(desc(goals_table_2014_2015$goals_per_match))])
 
-ggplot(goals_table, aes(x = event_team, y = goals_per_match, fill = event_team)) +
+ggplot(goals_table_2014_2015, aes(x = event_team, y = goals_per_match, fill = event_team)) +
   geom_bar(stat = "identity",   width = 0.5, show.legend = F) + 
   theme_minimal() +
-  scale_color_colorblind() +
+  gghighlight(event_team == "Leicester City" | event_team == 'Chelsea') +
   labs(title = "Promedio de goles por partido", y='Goles por partido', x=NULL,
        subtitle = 'Premier League temporada 2014-2015') +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.4),
         plot.title.position = "plot") +
-  geom_text(aes(label = goals_per_match),vjust = -1, size = 3, color = 'black') 
+  geom_text(aes(label = goals_per_match),vjust = -1, size = 3, color = 'black')
 
+
+# Goles por partido temporada 2015-2016 -----------------------------------
+total_matches = count(PL_season_2015_2016 %>% 
+                        filter(event_team=='Leicester City') %>% 
+                        distinct(id_odsp)) 
+
+goals_table_2015_2016$matches = rep(as.numeric(total_matches), length(goals_table_2015_2016[,1]))
+goals_table_2015_2016$goals_per_match = round(goals_table_2015_2016$n.y / goals_table_2015_2016$matches, 2)
+goals_table_2015_2016 = goals_table_2015_2016[order(desc(goals_table_2015_2016$goals_per_match)),]
+goals_table_2015_2016$event_team = factor(goals_table_2015_2016$event_team, levels = goals_table_2015_2016$event_team[order(desc(goals_table_2015_2016$goals_per_match))])
+
+ggplot(goals_table_2015_2016, aes(x = event_team, y = goals_per_match, fill = event_team)) +
+  geom_bar(stat = "identity",   width = 0.5, show.legend = F) + 
+  theme_minimal() +
+  gghighlight(event_team == "Leicester City" | event_team == 'Chelsea') +
+  labs(title = "Promedio de goles por partido", y='Goles por partido', x=NULL,
+       subtitle = 'Premier League temporada 2015-2016') +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.4),
+        plot.title.position = "plot") +
+  geom_text(aes(label = goals_per_match),vjust = -1, size = 3, color = 'black') 
 
 # Promedio de goles por partido
 mean(goals_table$goals_per_match)
 
+# Test de hipotesis goles por partido -------------------------------------------------
 
-goles_por_partido = read.csv(file = 'goles_por_partido.csv', encoding = 'UTF-8')
-PL_goles_por_partido = read.csv(file='PL_goal-per-match.csv', encoding = 'UTF-8')
-media = mean(goles_por_partido$goles)
-media_PL = mean(PL_goles_por_partido$goles)
-n = nrow(PL_goles_por_partido)
-vector = data.frame(x = rpois(n, media))
+archivo = PL_season_2015_2016 %>%
+  filter(event_team == 'Leicester City') %>% 
+  select(id_odsp, event_team, opponent, is_goal)
 
-PL_goles_por_partido %>% 
+archivo$id_odsp = as.character(archivo$id_odsp)
+archivo$event_team = as.character(archivo$event_team)
+archivo$opponent = as.character(archivo$opponent)
+archivo$is_goal = as.numeric(archivo$is_goal)
+write.csv(archivo, file = 'PL_2015.csv')
+########################################################
+
+
+goles_por_partido = read.csv(file = 'PL_2014_ok.csv', encoding = 'UTF-8')
+
+n = nrow(goles_por_partido)
+
+LC_2014 = goles_por_partido %>% filter(equipo == 'Leicester City')
+
+
+dist_emp = LC_2014 %>% 
   ggplot(aes(goles)) +
   geom_histogram(aes(y = stat(count)/sum(count)), position="identity",
                  bins = 17, fill = 'coral2') +
-  labs(title = 'Distribucion de goles convertidos', 
-       x = 'Goles en partidos', y = 'Probabilidad')
-  
-
-
-ggplot(vector, aes(x)) +
-  geom_histogram(aes(y = stat(count)/sum(count)), bins = 18, fill = 'blue') +
-  labs(title = 'Distribucion teorica poisson(1.35)', x = 'Goles en partidos', 
-       y = 'Probabilidad') +
-  scale_x_continuous(breaks=seq(1,6,by=1))
-
-  
-goles_por_partido %>% 
-  ggplot(aes(goles)) +
-  geom_histogram(aes(y = stat(count)/sum(count)), position="identity",
-                 bins = 17, fill = 'coral2') +
-  labs(title = 'Distribucion de goles convertidos', 
+  labs(title = 'Distribución de goles convertidos por Leicester City', 
+       subtitle = 'Temporada 2014-2015',
        x = 'Goles en partidos', y = 'Probabilidad') +
-  geom_histogram(data = vector, aes(x= x, y = stat(count)/sum(count)), 
-                 bins = 17, fill = 'blue',
-                 alpha = 0.5)
+  theme(plot.title.position = "plot") 
 
-k = sort(PL_goles_por_partido$goles)
-n = length(k)
-i = 1:n
-pi = (i - 0.5)/n
-quantiles = qpois(p = pi, lambda = media_PL)
-plot(k, quantiles)
-abline(a = 0, b = 1, col = 2)
 
-require(vcd)
+k = sort(LC_2014$goles)
 gf<-goodfit(k, type = "poisson", method = "MinChisq")
 gf$par
 summary(gf)
-# Se rechaza hipotesis nula
+
+pois = data.frame(x = rpois(100,  as.integer(gf$par)))
+
+dist_teo = ggplot(pois, aes(x)) +
+  geom_histogram(aes(y = stat(count)/sum(count)), bins = 17, fill = 'blue') +
+  labs(title = 'Distribución teórica poisson(1.22)', x = 'Goles en partidos', 
+       y = 'Probabilidad') +
+  scale_x_continuous(breaks=seq(1,6,by=1))
+
+dist_emp + dist_teo
+
+LC_2014 %>% 
+  ggplot(aes(goles)) +
+  geom_histogram(aes(y = stat(count)/sum(count)), position="identity",
+                 bins = 17, fill = 'coral2') +
+  labs(title = 'Distribucion teórica vs empírica', 
+       subtitle = 'Goles Leicester temporada 2014-2015', 
+       x = 'Goles en partidos', y = 'Probabilidad') + 
+  theme(plot.title.position = "plot") +
+  geom_histogram(data = pois, aes(x= x, y = stat(count)/sum(count)), 
+                 bins = 17, fill = 'blue',
+                 alpha = 0.5) 
+
+
+n = length(k)
+i = 1:n
+pi = (i - 0.5)/n
+quantiles = qpois(p = pi, lambda = as.integer(gf$par))
+plot(k, quantiles)
+abline(a = 0, b = 1, col = 2)
+
+
+# No se rechaza hipotesis nula, falta evidencia. 
 
 xempp <- seq(min(k), max(k), by=0.0001)
-plot(xempp, ppois(xempp, lambda=1.394259), type="l", col="red", xlab="Número de usuarios",ylab="ppois(usuarios, lambda)")
+plot(xempp, ppois(xempp, lambda=as.integer(gf$par)), type="l", col="red", xlab="Número de usuarios",ylab="ppois(usuarios, lambda)")
+plot(ecdf(k), add=TRUE)
+
+
+##################################################
+
+goles_por_partido = read.csv(file = 'PL_2015_ok.csv', encoding = 'UTF-8')
+
+n = nrow(goles_por_partido)
+
+LC_2015 = goles_por_partido %>% filter(equipo == 'Leicester City')
+
+
+dist_emp = LC_2015 %>% 
+  ggplot(aes(goles)) +
+  geom_histogram(aes(y = stat(count)/sum(count)), position="identity",
+                 bins = 17, fill = 'coral2') +
+  labs(title = 'Distribución de goles convertidos por Leicester City', 
+       subtitle = 'Temporada 2015-2016',
+       x = 'Goles en partidos', y = 'Probabilidad') +
+  theme(plot.title.position = "plot") 
+
+
+k = sort(LC_2015$goles)
+gf<-goodfit(k, type = "poisson", method = "MinChisq")
+gf$par
+summary(gf)
+
+# No se rechaza hipotesis nula, falta evidencia.
+
+pois = data.frame(x = rpois(100,  as.integer(gf$par)))
+
+dist_teo = ggplot(pois, aes(x)) +
+  geom_histogram(aes(y = stat(count)/sum(count)), bins = 17, fill = 'blue') +
+  labs(title = 'Distribución teórica poisson(1.85)', x = 'Goles en partidos', 
+       y = 'Probabilidad') +
+  scale_x_continuous(breaks=seq(1,6,by=1))
+
+dist_emp + dist_teo
+
+LC_2015 %>% 
+  ggplot(aes(goles)) +
+  geom_histogram(aes(y = stat(count)/sum(count)), position="identity",
+                 bins = 17, fill = 'coral2') +
+  labs(title = 'Distribucion teórica vs empírica', 
+       subtitle = 'Goles Leicester temporada 2014-2015', 
+       x = 'Goles en partidos', y = 'Probabilidad') + 
+  theme(plot.title.position = "plot") +
+  geom_histogram(data = pois, aes(x= x, y = stat(count)/sum(count)), 
+                 bins = 17, fill = 'blue',
+                 alpha = 0.5)
+  
+  
+  n = length(k)
+i = 1:n
+pi = (i - 0.5)/n
+quantiles = qpois(p = pi, lambda = as.integer(gf$par))
+plot(k, quantiles)
+abline(a = 0, b = 1, col = 2)
+
+xempp <- seq(min(k), max(k), by=0.0001)
+plot(xempp, ppois(xempp, lambda=as.integer(gf$par)), type="l", col="red", xlab="Número de usuarios",ylab="ppois(usuarios, lambda)")
 plot(ecdf(k), add=TRUE)
 
 
@@ -152,6 +260,7 @@ goal_location = subset(LeicesterCity,!is.na(shot_place)) %>%
          event_team == 'Leicester City') %>% 
   select(shot_place, is_goal)
 
+goal_location$is_goal = ifelse(goal_location$is_goal == 1, 'Gol', 'No gol')
 
 goal_location %>% 
   ggplot(aes(x = shot_place, fill = is_goal)) +
@@ -162,7 +271,7 @@ goal_location %>%
        subtitle = "Resultados Leicester City temporada 2015-2016",
        x = "Zona de la portería",
        y = "Probabilidad de gol") +
-  scale_fill_discrete("Es gol")+
+  scale_fill_discrete("Resultado")+
   theme(axis.text.x = element_text(angle=45),
         plot.title.position = "plot")+
   geom_text(aes(y = prop.table(..count..) * 100, 
@@ -203,7 +312,8 @@ ggplot(goleadores, aes(n, player)) +
   geom_point(size = 7, aes( colour= 'f15bb5'), show.legend = F) +
   labs(title = 'Goleadores Leicester City', subtitle = 'Temporada 2015-2016',
        y = 'Jugador', x = 'Cantidad de goles') +
-  geom_text(aes(label = n), size = 3, color = 'white') 
+  geom_text(aes(label = n), size = 3, color = 'white') +
+  theme(plot.title.position = "plot")
 
 
 
@@ -231,7 +341,7 @@ LC_shot_place = subset(LeicesterCity,!is.na(shot_place)) %>%
        subtitle = "Leicester City Attemps",
        x = "Event",
        y = "Frecuency") +
-  theme(axis.text.x = element_text(angle=45, vjust = 0.8)) 
+  theme(axis.text.x = element_text(angle=45, vjust = 0.8), plot.title.position = "plot") 
 
 LC_shot_place
 
